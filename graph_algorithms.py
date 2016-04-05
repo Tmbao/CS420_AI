@@ -128,3 +128,31 @@ class BFSAlgorithm(object):
                     openset.append(next_node)
 
         return None, None
+
+
+class DFSAlgorithm(object):
+    def _dfs(self, graph, source, target, weight_tag='weight'):
+        if source is target:
+            return True
+
+        for edge in graph.edges(cur_node, data=True):
+                (_, next_node, attr_dict) = edge
+
+                if distance[next_node] is float('inf'):
+                    distance[next_node] = cur_dist + attr_dict[weight_tag]
+                    trace[next_node] = cur_node
+                    if self._dfs(graph, next_node, target, weight_tag):
+                        return True
+
+        return False
+
+    def get_path(self, graph, source, target, weight_tag='weight'):
+        # In this algorithm, distance also plays the role of closedset
+        self.distance    = [float('inf')] * graph.number_of_nodes()
+        self.trace       = [None] * graph.number_of_nodes()
+
+        distance[source] = 0
+        if self._dfs(graph, source, target, weight_tag):
+            return distance[target], _trace(self.trace, source, target)
+        else:
+            return None, None
