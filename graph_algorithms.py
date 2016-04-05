@@ -8,7 +8,8 @@ def _trace(source, target, trace):
         prev = trace[node]
         path.append((prev, node))
         node = prev
-    return reversed(path)
+    res = path[::-1]
+    return res
 
 
 class UCSAlgorithm(object):
