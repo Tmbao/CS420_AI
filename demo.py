@@ -59,4 +59,5 @@ def heuristic_func(cur_node, target):
 algo = AstarAlgorithm(heuristic_func=heuristic_func)
 distance, path = algo.get_path(graph, source, target)
 print distance
+print path
 graph_drawer.plot('demo.png', graph, source, target, path)
