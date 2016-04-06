@@ -7,13 +7,13 @@ import networkx as nx
 from networkx.drawing.nx_agraph import graphviz_layout
 
 '''
-TODO:
+!!!TODO:
 Choose a good looking layout prog
 http://www.graphviz.org/
 '''
 
-def plot(file_name, graph, source, target, path, weight_tag='weight', name_tag='name', color='b'):
-    pos = graphviz_layout(graph, prog='dot') # choose a better prog?
+def plot(file_name, graph, source, target, path, weight_tag='weight', name_tag='name', color='b', layout_type='circo'):
+    pos = graphviz_layout(graph, prog=layout_type) # choose a better prog?
 
     # draw nodes
     nx.draw_networkx_nodes(graph, pos, nodelist=[x for x in graph.nodes() if not x == source])

@@ -1,4 +1,5 @@
 from heapq import heappush, heappop
+from collections import deque
 
 
 def _trace(source, target, trace):
@@ -122,7 +123,7 @@ class BFSAlgorithm(object):
             for edge in graph.edges(cur_node, data=True):
                 (_, next_node, attr_dict) = edge
 
-                if distance[next_node] is float('inf'):
+                if distance[next_node] == float('inf'):
                     distance[next_node] = cur_dist + attr_dict[weight_tag]
                     trace[next_node] = cur_node
                     openset.append(next_node)
@@ -135,12 +136,12 @@ class DFSAlgorithm(object):
         if source is target:
             return True
 
-        for edge in graph.edges(cur_node, data=True):
+        for edge in graph.edges(source, data=True):
                 (_, next_node, attr_dict) = edge
 
-                if distance[next_node] is float('inf'):
-                    distance[next_node] = cur_dist + attr_dict[weight_tag]
-                    trace[next_node] = cur_node
+                if self.distance[next_node] == float('inf'):
+                    self.distance[next_node] = self.distance[source] + attr_dict[weight_tag]
+                    self.trace[next_node] = source
                     if self._dfs(graph, next_node, target, weight_tag):
                         return True
 
@@ -149,10 +150,42 @@ class DFSAlgorithm(object):
     def get_path(self, graph, source, target, weight_tag='weight'):
         # In this algorithm, distance also plays the role of closedset
         self.distance    = [float('inf')] * graph.number_of_nodes()
-        self.trace       = [None] * graph.number_of_nodes()
+        self.trace       = [0] * graph.number_of_nodes()
 
-        distance[source] = 0
+        self.distance[source] = 0
         if self._dfs(graph, source, target, weight_tag):
-            return distance[target], _trace(self.trace, source, target)
+            return self.distance[target], _trace(source, target, self.trace)
         else:
             return None, None
+
+
+class HillClimbingAlgorithm(object):
+    def _greedy_dfs(self, graph, source, target, weight_tag='weight'):
+        if source is target:
+            return True
+
+        openset = []
+        for edge in graph.edges(source, data=True):
+                (_, next_node, attr_dict) = edge
+                openset.append((next_node, self.distance[source] + attr_dict[weight_tag]))
+
+        openset = sorted(openset, key=lambda x: x[1])
+        for next_node, next_dist in openset:
+            if self.distance[next_node] == float('inf'):
+                self.distance[next_node] = next_dist
+                self.trace[next_node] = source
+                if self._greedy_dfs(graph, next_node, target, weight_tag):
+                    return True
+
+        return False
+
+    def get_path(self, graph, source, target, weight_tag='weight'):
+        # In this algorithm, distance also plays the role of closedset
+        self.distance    = [float('inf')] * graph.number_of_nodes()
+        self.trace       = [None] * graph.number_of_nodes()
+
+        self.distance[source] = 0
+        if self._greedy_dfs(graph, source, target, weight_tag):
+            return self.distance[target], _trace(source, target, self.trace)
+        else:
+            return None, None    
