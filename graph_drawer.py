@@ -3,24 +3,17 @@ try:
 except:
     raise
 import networkx as nx
-import pygraphviz as pg
+#import pygraphviz as pg
+from networkx.drawing.nx_agraph import graphviz_layout
 
 '''
-class GraphDrawer:
-
-    def __init__(self):
-        self.G = pg.AGraph()
-        
-    def loadEdgeList(self,edgeList):
-        for edge in edgeList:
-            self.G.add_edge(edge[0], edge[1], weight = edge[2], length = edge[2])
-            
-    def plot(self):
-        self.G.draw('hihi.png', format='png', prog='neato')
+TODO:
+Choose a good looking layout prog
+http://www.graphviz.org/
 '''
 
-def plot(file_name, graph, source, target, path, weight_tag='weight', name_tag='name', color='r'):
-    pos = nx.spring_layout(graph) # different layout?
+def plot(file_name, graph, source, target, path, weight_tag='weight', name_tag='name', color='b'):
+    pos = graphviz_layout(graph, prog='dot') # choose a better prog?
 
     # draw nodes
     nx.draw_networkx_nodes(graph, pos, nodelist=[x for x in graph.nodes() if not x == source])
