@@ -14,7 +14,7 @@ def _trace(source, target, trace):
 
 
 class UCSAlgorithm(object):
-    def get_path(self, graph, source, target, weight_tag='weight'):
+    def get_path(self, graph, source, target, weight_tag='len'):
         # dictionary of distance from source
         distance    = [float('inf')] * graph.number_of_nodes()
         trace       = [None] * graph.number_of_nodes()
@@ -60,7 +60,7 @@ class AstarAlgorithm(object):
     def __init__(self, heuristic_func):
         self.heuristic_func = heuristic_func
 
-    def get_path(self, graph, source, target, weight_tag='weight'):
+    def get_path(self, graph, source, target, weight_tag='len'):
         # dictionary of distance from source
         distance    = [float('inf')] * graph.number_of_nodes()
         trace       = [None] * graph.number_of_nodes()
@@ -104,7 +104,7 @@ class AstarAlgorithm(object):
 
 
 class BFSAlgorithm(object):
-    def get_path(self, graph, source, target, weight_tag='weight'):
+    def get_path(self, graph, source, target, weight_tag='len'):
         # In this algorithm, distance also plays the role of closedset
         distance    = [float('inf')] * graph.number_of_nodes()
         openset     = deque()
@@ -132,7 +132,7 @@ class BFSAlgorithm(object):
 
 
 class DFSAlgorithm(object):
-    def _dfs(self, graph, source, target, weight_tag='weight'):
+    def _dfs(self, graph, source, target, weight_tag='len'):
         if source is target:
             return True
 
@@ -147,7 +147,7 @@ class DFSAlgorithm(object):
 
         return False
 
-    def get_path(self, graph, source, target, weight_tag='weight'):
+    def get_path(self, graph, source, target, weight_tag='len'):
         # In this algorithm, distance also plays the role of closedset
         self.distance    = [float('inf')] * graph.number_of_nodes()
         self.trace       = [0] * graph.number_of_nodes()
@@ -160,7 +160,7 @@ class DFSAlgorithm(object):
 
 
 class HillClimbingAlgorithm(object):
-    def _greedy_dfs(self, graph, source, target, weight_tag='weight'):
+    def _greedy_dfs(self, graph, source, target, weight_tag='len'):
         if source is target:
             return True
 
@@ -179,7 +179,7 @@ class HillClimbingAlgorithm(object):
 
         return False
 
-    def get_path(self, graph, source, target, weight_tag='weight'):
+    def get_path(self, graph, source, target, weight_tag='len'):
         # In this algorithm, distance also plays the role of closedset
         self.distance    = [float('inf')] * graph.number_of_nodes()
         self.trace       = [None] * graph.number_of_nodes()

@@ -12,7 +12,7 @@ Choose a good looking layout prog
 http://www.graphviz.org/
 '''
 
-def plot(file_name, graph, source, target, path, weight_tag='weight', name_tag='name', color='b', layout_type='circo'):
+def plot(file_name, graph, source, target, path, weight_tag='len', name_tag='name', color='b', layout_type='neato'):
     pos = graphviz_layout(graph, prog=layout_type) # choose a better prog?
 
     # draw nodes
