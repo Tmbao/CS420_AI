@@ -4,7 +4,7 @@ import networkx as nx
 import timeit
 
 from graph_algorithms import *
-import graph_drawer
+#import graph_drawer
 
 token_id = None
 tokens = None
@@ -68,10 +68,10 @@ def demo(run_algorithm, input_file, output_image_file):
             return math.sqrt((attr_lat[cur_node] - attr_lat[target]) ** 2 + (attr_lng[cur_node] - attr_lng[target]) ** 2)
 
         algo = AstarAlgorithm(heuristic_func=heuristic_func)
-    elif run_algorithm == 'UCS':
-        algo = UCSAlgorithm()
-    elif run_algorithm == 'BFS':
-        algo = BFSAlgorithm()
+    elif run_algorithm == 'HillClimbing':
+        algo = HillClimbingAlgorithm()
+    elif run_algorithm == 'DFS':
+        algo = DFSAlgorithm()
 
     distance, path = algo.get_path(graph, source, target)
     finish_time = timeit.default_timer()

@@ -3,7 +3,7 @@ import math
 
 import demo
 
-algorithms = ['Astar', 'BFS', 'UCS']
+algorithms = ['Astar', 'DFS', 'HillClimbing']
 
 def generate_input(n_vertice, n_edge, file_name):
     vertices = []
