@@ -36,7 +36,7 @@ class UCSAlgorithm(object):
                 continue
 
             # check whether we have reached the target
-            if cur_node is target:
+            if cur_node == target:
                 # TODO: return the path from source to garget
                 return cur_dist, _trace(source, target, trace)
 
@@ -83,7 +83,7 @@ class AstarAlgorithm(object):
                 continue
 
             # check whether we have reached the target
-            if cur_node is target:
+            if cur_node == target:
                 # TODO: return the path from source to garget
                 return cur_dist, _trace(source, target, trace)
 
@@ -112,12 +112,12 @@ class BFSAlgorithm(object):
 
         distance[source] = 0
         openset.append(source)
-        
+
         while len(openset) > 0:
             cur_node = openset.popleft()
             cur_dist = distance[cur_node]
 
-            if cur_node is target:
+            if cur_node == target:
                 return cur_dist, _trace(source, target, trace)
 
             for edge in graph.edges(cur_node, data=True):
@@ -133,7 +133,7 @@ class BFSAlgorithm(object):
 
 class DFSAlgorithm(object):
     def _dfs(self, graph, source, target, weight_tag='len'):
-        if source is target:
+        if source == target:
             return True
 
         for edge in graph.edges(source, data=True):
@@ -161,7 +161,7 @@ class DFSAlgorithm(object):
 
 class HillClimbingAlgorithm(object):
     def _greedy_dfs(self, graph, source, target, weight_tag='len'):
-        if source is target:
+        if source == target:
             return True
 
         openset = []
