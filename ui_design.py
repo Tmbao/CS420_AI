@@ -85,8 +85,8 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "Shortest Path Finder", None))
-        self.label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600; color:#550000;\">SHORTEST PATH</span></p><p align=\"center\"><span style=\" font-size:18pt; font-weight:600; color:#550000;\">FINDER</span></p></body></html>", None))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Pathfinding", None))
+        self.label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600; color:#000055;\">SHORTEST PATH</span></p><p align=\"center\"><span style=\" font-size:18pt; font-weight:600; color:#550000;\">FINDER</span></p></body></html>", None))
         self.pushButtonRun.setText(_translate("MainWindow", "RUN!", None))
         self.label_2.setText(_translate("MainWindow", "Map File:", None))
         self.lineEditMapFile.setText(_translate("MainWindow", "demo_map.txt", None))
@@ -95,6 +95,6 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "Output image:", None))
         self.lineEditImageFile.setText(_translate("MainWindow", "demo.png", None))
         self.label_4.setText(_translate("MainWindow", "Algorithm:  ", None))
-        self.lineEditAlgorithm.setToolTip(_translate("MainWindow", "<html><head/><body><p>Astar, UCS, or BFS</p></body></html>", None))
+        self.lineEditAlgorithm.setToolTip(_translate("MainWindow", "<html><head/><body><p>Astar, DFS, or HillClimbing</p></body></html>", None))
         self.lineEditAlgorithm.setText(_translate("MainWindow", "Astar", None))
 
