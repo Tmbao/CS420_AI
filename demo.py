@@ -64,10 +64,13 @@ def demo(run_algorithm, input_file, output_image_file):
     start_time = timeit.default_timer()
 
     if run_algorithm == 'Astar':
-        def heuristic_func(cur_node, target):
+        def heuristic_l2_func(cur_node, target):
             return math.sqrt((attr_lat[cur_node] - attr_lat[target]) ** 2 + (attr_lng[cur_node] - attr_lng[target]) ** 2)
 
-        algo = AstarAlgorithm(heuristic_func=heuristic_func)
+        def heuristic_l1_func(cur_node, target):
+            return abs(attr_lat[cur_node] - attr_lat[target]) + abs(attr_lng[cur_node] - attr_lng[target])
+
+        algo = AstarAlgorithm(heuristic_func=heuristic_l1_func)
     elif run_algorithm == 'UCS':
         algo = UCSAlgorithm()
     elif run_algorithm == 'BFS':
@@ -81,7 +84,7 @@ def demo(run_algorithm, input_file, output_image_file):
         print 'The path does not exist!'
     else:
         print 'Found distance: {}'.format(distance)
-        print 'Path: {}'.format(path)
+        # print 'Path: {}'.format(path)
         if output_image_file:
             graph_drawer.plot(output_image_file, graph, source, target, path)
             print 'Visualization image was written to {}'.format(output_image_file)

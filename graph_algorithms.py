@@ -5,7 +5,7 @@ from collections import deque
 def _trace(source, target, trace):
     path = []
     node = target
-    while node is not source:
+    while node != source:
         prev = trace[node]
         path.append((prev, node))
         node = prev
@@ -36,7 +36,7 @@ class UCSAlgorithm(object):
                 continue
 
             # check whether we have reached the target
-            if cur_node is target:
+            if cur_node == target:
                 # TODO: return the path from source to garget
                 return cur_dist, _trace(source, target, trace)
 
@@ -47,7 +47,7 @@ class UCSAlgorithm(object):
             for edge in graph.edges(cur_node, data=True):
                 (_, next_node, attr_dict) = edge
 
-                if closedset[next_node] is False:
+                if closedset[next_node] == False:
                     if distance[next_node] > cur_dist + attr_dict[weight_tag]:
                         distance[next_node] = cur_dist + attr_dict[weight_tag]
                         trace[next_node] = cur_node
@@ -83,7 +83,7 @@ class AstarAlgorithm(object):
                 continue
 
             # check whether we have reached the target
-            if cur_node is target:
+            if cur_node == target:
                 # TODO: return the path from source to garget
                 return cur_dist, _trace(source, target, trace)
 
@@ -94,7 +94,7 @@ class AstarAlgorithm(object):
             for edge in graph.edges(cur_node, data=True):
                 (_, next_node, attr_dict) = edge
 
-                if closedset[next_node] is False:
+                if closedset[next_node] == False:
                     if distance[next_node] > cur_dist + attr_dict[weight_tag]:
                         distance[next_node] = cur_dist + attr_dict[weight_tag]
                         trace[next_node] = cur_node
@@ -112,12 +112,12 @@ class BFSAlgorithm(object):
 
         distance[source] = 0
         openset.append(source)
-        
+
         while len(openset) > 0:
             cur_node = openset.popleft()
             cur_dist = distance[cur_node]
 
-            if cur_node is target:
+            if cur_node == target:
                 return cur_dist, _trace(source, target, trace)
 
             for edge in graph.edges(cur_node, data=True):
@@ -133,7 +133,7 @@ class BFSAlgorithm(object):
 
 class DFSAlgorithm(object):
     def _dfs(self, graph, source, target, weight_tag='len'):
-        if source is target:
+        if source == target:
             return True
 
         for edge in graph.edges(source, data=True):
@@ -161,7 +161,7 @@ class DFSAlgorithm(object):
 
 class HillClimbingAlgorithm(object):
     def _greedy_dfs(self, graph, source, target, weight_tag='len'):
-        if source is target:
+        if source == target:
             return True
 
         openset = []
