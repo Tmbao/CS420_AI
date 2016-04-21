@@ -13,7 +13,7 @@ Choose a good looking layout prog
 http://www.graphviz.org/
 '''
 
-def plot(file_name, graph, source, target, path, weight_tag='len', name_tag='name', color='b', layout_type='neato', _figsize=(30, 30), _nodesize=4200, edge_width=2.0):
+def plot(file_name, graph, source, target, path, weight_tag='len', name_tag='name', color='b', layout_type='neato', _figsize=(20, 20), _nodesize=4000, edge_width=2.0):
     plt.figure(figsize=_figsize)
     node_path = list(set([_node for _edge in path for _node in _edge]))
     #print node_path

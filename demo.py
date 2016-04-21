@@ -92,7 +92,7 @@ def demo(run_algorithm, input_file, output_image_file):
 if __name__ == "__main__":
     run_algorithm = 'Astar'
     input_file = 'demo_map.txt'
-    output_image_file = 'demo.png'
+    output_image_file = 'demo.pdf'
 
     argc = len(sys.argv)
     if argc >= 2:

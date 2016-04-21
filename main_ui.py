@@ -21,7 +21,7 @@ class MyApp(QtGui.QMainWindow, ui_design.Ui_MainWindow):
 
     def edit_map_file(self):
         map_file = str(self.lineEditMapFile.text())
-        os.system('gedit '+map_file)
+        os.system('gedit ' + map_file)
 
     def show_map_file_format(self):
         msg_box = QtGui.QMessageBox()     
@@ -30,7 +30,11 @@ class MyApp(QtGui.QMainWindow, ui_design.Ui_MainWindow):
         msg_box.setText('Format of map input file')
         msg_box.setInformativeText('Click Show Details to view the format of map input file')
         msg_box.setWindowTitle('Map File Format')
-        map_format = '''First line: n_node - the number of nodes\n\nNext n_node lines contain information of each node in the form "node_id node_name latitude longtitude"\n\nNext line: n_edge - the number of edges\n\nNext n_edge lines contain information of each edge in the form "vertice_1 vertice_2 length"\n\nLast line: start_node end_node\n'''
+        map_format = '''First line: n_node - the number of nodes\n\n\
+            Next n_node lines contain information of each node in the form "node_id node_name latitude longtitude"\n\n\
+            Next line: n_edge - the number of edges\n\n\
+            Next n_edge lines contain information of each edge in the form "vertice_1 vertice_2 length"\n\n\
+            Last line: start_node end_node\n'''
         msg_box.setDetailedText(map_format)
         msg_box.setStandardButtons(QtGui.QMessageBox.Ok)
         msg_box.exec_()
