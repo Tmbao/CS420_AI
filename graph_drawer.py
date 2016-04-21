@@ -36,5 +36,5 @@ def plot(file_name, graph, source, target, path, weight_tag='len', name_tag='nam
     plt.axis('off')
     plt.savefig(file_name)
     webbrowser.open(file_name)
-    #plt.show()
-        
+    # plt.show()
+
