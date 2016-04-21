@@ -16,7 +16,7 @@ http://www.graphviz.org/
 def plot(file_name, graph, source, target, path, weight_tag='len', name_tag='name', color='b', layout_type='neato', _figsize=(30, 30), _nodesize=4200, edge_width=2.0):
     plt.figure(figsize=_figsize)
     node_path = list(set([_node for _edge in path for _node in _edge]))
-    print node_path
+    #print node_path
     pos = graphviz_layout(graph, prog=layout_type) # choose a better prog?
 
     # draw nodes
