@@ -5,7 +5,7 @@ from collections import deque
 def _trace(source, target, trace):
     path = []
     node = target
-    while node is not source:
+    while node != source:
         prev = trace[node]
         path.append((prev, node))
         node = prev
@@ -47,7 +47,7 @@ class UCSAlgorithm(object):
             for edge in graph.edges(cur_node, data=True):
                 (_, next_node, attr_dict) = edge
 
-                if closedset[next_node] is False:
+                if closedset[next_node] == False:
                     if distance[next_node] > cur_dist + attr_dict[weight_tag]:
                         distance[next_node] = cur_dist + attr_dict[weight_tag]
                         trace[next_node] = cur_node
@@ -94,7 +94,7 @@ class AstarAlgorithm(object):
             for edge in graph.edges(cur_node, data=True):
                 (_, next_node, attr_dict) = edge
 
-                if closedset[next_node] is False:
+                if closedset[next_node] == False:
                     if distance[next_node] > cur_dist + attr_dict[weight_tag]:
                         distance[next_node] = cur_dist + attr_dict[weight_tag]
                         trace[next_node] = cur_node
