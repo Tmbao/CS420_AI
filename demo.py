@@ -10,7 +10,7 @@ token_id = None
 tokens = None
 
 
-def demo(run_algorithm, input_file, output_image_file):
+def demo(run_algorithm, input_nodes, input_edges, source, target, output_image_file):
     global token_id
     global tokens
 
@@ -19,7 +19,7 @@ def demo(run_algorithm, input_file, output_image_file):
             content = file.read()
         return content.split()
 
-    tokens = read_entire_file(input_file)
+    tokens = read_entire_file(input_nodes)
     token_id = -1
 
     def next_token():
@@ -34,46 +34,40 @@ def demo(run_algorithm, input_file, output_image_file):
 
     graph = nx.Graph()
 
-    # add nodes
-    n_nodes = int(next_token())
-    for i in range(n_nodes):
-        node_id = int(next_token())
+    id = {}
+    names = []
+    n_vertices = 0
+    hf = []
+    while token_id + 1 < len(tokens):
         node_name = next_token()
-        node_lat = int(next_token())
-        node_lng = int(next_token())
+        names.append(node_name)
+        id[node_name] = n_vertices
+        hf.append(float(next_token()))
+        n_vertices += 1
 
-        graph.add_node(node_id, name=node_name, lat=node_lat, lng=node_lng)
+        graph.add_node(id[node_name], name=node_name)
+
+    tokens = read_entire_file(input_edges)
+    token_id = -1
 
     # add edges
-    n_edges = int(next_token())
-    for i in range(n_edges):
-        u = int(next_token())
-        v = int(next_token())
+    while token_id + 1 < len(tokens):
+        u = id[next_token()]
+        v = id[next_token()]
         c = float(next_token())
 
         graph.add_edge(u, v, len=c)
-        # 
         graph.add_edge(v, u, len=c)
 
-    source = int(next_token())
-    target = int(next_token())
+    source = id[source]
+    target = id[target]
 
-    attr_lat = nx.get_node_attributes(graph, 'lat')
-    attr_lng = nx.get_node_attributes(graph, 'lng')
     attr_name = nx.get_node_attributes(graph, 'name')
 
     print 'Running {} algorithm'.format(run_algorithm)
     start_time = timeit.default_timer()
 
     if run_algorithm == 'Astar':
-        def heuristic_l2_func(cur_node, target):
-            return math.sqrt((attr_lat[cur_node] - attr_lat[target]) ** 2 + (attr_lng[cur_node] - attr_lng[target]) ** 2)
-
-        def heuristic_l1_func(cur_node, target):
-            return abs(attr_lat[cur_node] - attr_lat[target]) + abs(attr_lng[cur_node] - attr_lng[target])
-
-        # 
-        hf = [366, 0, 160, 242, 161, 176, 77, 151, 226, 244, 241, 234, 380, 100, 193, 253, 329, 80, 199, 374]
         def heuristic_hardcoded(cur_node, target):
             return hf[cur_node]
 
@@ -91,21 +85,29 @@ def demo(run_algorithm, input_file, output_image_file):
         print 'The path does not exist!'
     else:
         print 'Found distance: {}'.format(distance)
-        print 'Path: {}'.format(path)
+        print 'Path: '
+        for edge in path:
+            (u, v) = edge
+            print '({} - {})'.format(names[u], names[v])
         if output_image_file:
             graph_drawer.plot(output_image_file, graph, source, target, path)
             print 'Visualization image was written to {}'.format(output_image_file)
 
 if __name__ == "__main__":
     run_algorithm = 'Astar'
-    input_file = 'demo_map.txt'
-    output_image_file = 'demo.pdf'
 
     argc = len(sys.argv)
     if argc >= 2:
         run_algorithm = sys.argv[1]
     if argc >= 3:
-        input_file = sys.argv[2]
+        input_nodes = sys.argv[2]
     if argc >= 4:
-        output_image_file = sys.argv[3]
-    demo(run_algorithm, input_file, output_image_file)
+        input_edges = sys.argv[3]
+    if argc >= 5:
+        source = sys.argv[4]
+    if argc >= 6:
+        target = sys.argv[5]
+    if argc >= 7:
+        output_image_file = sys.argv[6]
+
+    demo(run_algorithm, input_nodes, input_edges, source, target, output_image_file)

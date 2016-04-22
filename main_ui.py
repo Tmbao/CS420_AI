@@ -31,7 +31,7 @@ class MyApp(QtGui.QMainWindow, ui_design.Ui_MainWindow):
         source = str(self.lineEditSrc.text())
         target = str(self.lineEditTarget.text())
 
-        os.system('python demo_1.py {} {} {} {} {} {}'.format(chosen_algorithm, heuristic_file, edge_file, source, target, image_file))
+        os.system('python demo.py {} {} {} {} {} {}'.format(chosen_algorithm, heuristic_file, edge_file, source, target, image_file))
 
 def main():
     app = QtGui.QApplication(sys.argv)  
