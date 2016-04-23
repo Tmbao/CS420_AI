@@ -14,7 +14,7 @@ def _trace(source, target, trace):
 
 
 class UCSAlgorithm(object):
-    def get_path(self, graph, source, target, weight_tag='len'):
+    def get_path(self, graph, source, target, weight_tag='len', verbose=False):
         # dictionary of distance from source
         distance    = [float('inf')] * graph.number_of_nodes()
         trace       = [None] * graph.number_of_nodes()
@@ -27,7 +27,10 @@ class UCSAlgorithm(object):
         distance[source] = 0
         heappush(openset, (distance[source], source))
 
+        n_loops = 0
+
         while len(openset) > 0:
+            n_loops += 1
             # get the top element of the heap
             (cur_dist, cur_node) = heappop(openset)
 
@@ -38,6 +41,8 @@ class UCSAlgorithm(object):
             # check whether we have reached the target
             if cur_node == target:
                 # TODO: return the path from source to garget
+                if verbose:
+                    print 'Number of loops: {}'.format(n_loops)
                 return cur_dist, _trace(source, target, trace)
 
             # add the current node into closed set
@@ -60,7 +65,7 @@ class AstarAlgorithm(object):
     def __init__(self, heuristic_func):
         self.heuristic_func = heuristic_func
 
-    def get_path(self, graph, source, target, weight_tag='len'):
+    def get_path(self, graph, source, target, weight_tag='len', verbose=False):
         # dictionary of distance from source
         distance    = [float('inf')] * graph.number_of_nodes()
         trace       = [None] * graph.number_of_nodes()
@@ -73,7 +78,10 @@ class AstarAlgorithm(object):
         distance[source] = 0
         heappush(openset, (distance[source] + self.heuristic_func(source, target), source))
 
+        n_loops = 0
+
         while len(openset) > 0:
+            n_loops += 1
             # get the top element of the heap
             (cur_hcost, cur_node) = heappop(openset)
             cur_dist = distance[cur_node]
@@ -85,6 +93,8 @@ class AstarAlgorithm(object):
             # check whether we have reached the target
             if cur_node == target:
                 # TODO: return the path from source to garget
+                if verbose:
+                    print 'Number of loops: {}'.format(n_loops)
                 return cur_dist, _trace(source, target, trace)
 
             # add the current node into closed set
@@ -104,7 +114,7 @@ class AstarAlgorithm(object):
 
 
 class BFSAlgorithm(object):
-    def get_path(self, graph, source, target, weight_tag='len'):
+    def get_path(self, graph, source, target, weight_tag='len', verbose=False):
         # In this algorithm, distance also plays the role of closedset
         distance    = [float('inf')] * graph.number_of_nodes()
         openset     = deque()
@@ -113,11 +123,17 @@ class BFSAlgorithm(object):
         distance[source] = 0
         openset.append(source)
 
+        n_loops = 0
+
         while len(openset) > 0:
+            n_loops += 1
+
             cur_node = openset.popleft()
             cur_dist = distance[cur_node]
 
             if cur_node == target:
+                if verbose:
+                    print 'Number of loops: {}'.format(n_loops)
                 return cur_dist, _trace(source, target, trace)
 
             for edge in graph.edges(cur_node, data=True):
@@ -129,63 +145,3 @@ class BFSAlgorithm(object):
                     openset.append(next_node)
 
         return None, None
-
-
-class DFSAlgorithm(object):
-    def _dfs(self, graph, source, target, weight_tag='len'):
-        if source == target:
-            return True
-
-        for edge in graph.edges(source, data=True):
-                (_, next_node, attr_dict) = edge
-
-                if self.distance[next_node] == float('inf'):
-                    self.distance[next_node] = self.distance[source] + attr_dict[weight_tag]
-                    self.trace[next_node] = source
-                    if self._dfs(graph, next_node, target, weight_tag):
-                        return True
-
-        return False
-
-    def get_path(self, graph, source, target, weight_tag='len'):
-        # In this algorithm, distance also plays the role of closedset
-        self.distance    = [float('inf')] * graph.number_of_nodes()
-        self.trace       = [0] * graph.number_of_nodes()
-
-        self.distance[source] = 0
-        if self._dfs(graph, source, target, weight_tag):
-            return self.distance[target], _trace(source, target, self.trace)
-        else:
-            return None, None
-
-
-class HillClimbingAlgorithm(object):
-    def _greedy_dfs(self, graph, source, target, weight_tag='len'):
-        if source == target:
-            return True
-
-        openset = []
-        for edge in graph.edges(source, data=True):
-                (_, next_node, attr_dict) = edge
-                openset.append((next_node, self.distance[source] + attr_dict[weight_tag]))
-
-        openset = sorted(openset, key=lambda x: x[1])
-        for next_node, next_dist in openset:
-            if self.distance[next_node] == float('inf'):
-                self.distance[next_node] = next_dist
-                self.trace[next_node] = source
-                if self._greedy_dfs(graph, next_node, target, weight_tag):
-                    return True
-
-        return False
-
-    def get_path(self, graph, source, target, weight_tag='len'):
-        # In this algorithm, distance also plays the role of closedset
-        self.distance    = [float('inf')] * graph.number_of_nodes()
-        self.trace       = [None] * graph.number_of_nodes()
-
-        self.distance[source] = 0
-        if self._greedy_dfs(graph, source, target, weight_tag):
-            return self.distance[target], _trace(source, target, self.trace)
-        else:
-            return None, None    

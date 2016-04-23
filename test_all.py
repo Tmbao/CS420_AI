@@ -1,7 +1,7 @@
 from random import randint
 import math
 
-import demo
+import demo_old
 
 algorithms = ['Astar', 'BFS', 'UCS']
 
@@ -102,10 +102,10 @@ def generate_grid_input(n_vertice, n_edge, file_name):
 n_test = 10
 for test_id in range(n_test):
     print '\n---\nTEST {}'.format(test_id)
-    n_vertice = randint(10000, 200000)
-    n_edge = n_vertice * randint(1, (n_vertice - 1) / 2)
+    n_vertice = randint(10000, 50000)
+    n_edge = n_vertice * randint(1, 20)
     print '#vertices = {}, #edges = {}'.format(n_vertice, n_edge)
-    generate_grid_input(n_vertice, n_edge, 'temp.txt')
+    generate_tree_input(n_vertice, n_edge, 'temp.txt')
 
     for algorithm in algorithms:
-        demo.demo(algorithm, 'temp.txt', None)
+        demo_old.demo(algorithm, 'temp.txt', None)

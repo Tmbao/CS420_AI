@@ -1,0 +1,28 @@
+
+---
+TEST 0
+#vertices = 47938, #edges = 671132
+Running Astar algorithm
+Number of loops: 9645
+Finished in 0.826920032501
+Found distance: 8187.7373042
+Running BFS algorithm
+Number of loops: 19566
+Finished in 0.754491090775
+Found distance: 12481.9275481
+Running UCS algorithm
+Number of loops: 16002
+Finished in 1.16629910469
+Found distance: 8187.7373042
+
+---
+TEST 1
+#vertices = 36576, #edges = 731520
+Running Astar algorithm
+Number of loops: 3302
+Finished in 0.951448917389
+Found distance: 6414.69239827
+Running BFS algorithm
+Number of loops: 10212
+Finished in 0.785478115082
+Found distance: 21045.0095553

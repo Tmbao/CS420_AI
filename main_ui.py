@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from PyQt4 import QtGui
 import sys
 import ui_design
