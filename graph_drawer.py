@@ -15,9 +15,15 @@ http://www.graphviz.org/
 def plot(file_name, graph, source, target, path, weight_tag='len', name_tag='name', color='b', layout_type='neato'):
     pos = graphviz_layout(graph, prog=layout_type) # choose a better prog?
 
+    node_list = [source]
+
+    for edge in path:
+        (u, v) = edge
+        node_list.append(v)
+
     # draw nodes
     nx.draw_networkx_nodes(graph, pos, nodelist=[x for x in graph.nodes() if not x == source])
-    nx.draw_networkx_nodes(graph, pos, nodelist=[source], node_color=color)
+    nx.draw_networkx_nodes(graph, pos, nodelist=node_list, node_color=color)
 
     # draw edges
     nx.draw_networkx_edges(graph, pos, edgelist=[x for x in graph.edges() if not x in path])
